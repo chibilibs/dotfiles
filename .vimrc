@@ -1,15 +1,11 @@
 vim9script
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  au VimEnter * :PlugInstall --sync | so $MYVIMRC
-endif
-
 call plug#begin()
 	Plug 'morhetz/gruvbox'
+	Plug 'catppuccin/vim', { 'as': 'catppuccin'  } 
 	Plug 'yegappan/lsp'
 	Plug 'jiangmiao/auto-pairs'
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'lambdalisue/fern.vim'
 	Plug 'lambdalisue/nerdfont.vim'
@@ -21,6 +17,7 @@ call plug#begin()
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'vimsence/vimsence'
 	Plug 'wakatime/vim-wakatime'
+	Plug 'sheerun/vim-polyglot'
 	#Plug '' TODO! magit support
 call plug#end()
 
@@ -31,18 +28,21 @@ set nu tgc scs ic si hls
 set ts=4 sw=4
 set fileencoding=utf-8 fileformat=unix
 set background=dark
-set signcolumn=yes
-set colorcolumn=80
+#set signcolumn=yes
+#set colorcolumn=80
 set timeoutlen=300
 set wildmenu wildoptions=fuzzy
 set hidden
 set scrolloff=8
 set lazyredraw
+set nobackup
+set nowritebackup
 set noswapfile
 set confirm
 set nostartofline
 
-colo gruvbox
+colo catppuccin_mocha
+#colo gruvbox
 
 # lsp settings
 var servers = [
@@ -97,7 +97,7 @@ var lspOpts = {
   snippetSupport: true,
   noNewlineInCompletion: false,
   usePopupInCodeAction: true,
-  completionTextEdit: true 
+  completionTextEdit: false
 }
 
 autocmd VimEnter * call LspOptionsSet(lspOpts)
@@ -160,9 +160,17 @@ autocmd FileType fern call glyph_palette#apply()
 
 ## Airline
 set noshowmode laststatus=2
-g:airline#extensions#tabline#enabled = 1
+g:airline#extensions#tabline#enabled = 0
 g:airline_powerline_fonts = 1
-g:airline_theme = "base16_gruvbox_dark_hard"
+#g:airline_theme = "base16_gruvbox_dark_hard"
+
+### gvim
+set guifont=FantasqueSansM\ Nerd\ Font:h10
+set backspace=eol,start,indent
+set t_Co=256
+set antialias
+set clipboard=unnamed
+set guioptions=
 
 ###############################################
 ################ Keybinds #####################
